@@ -49,4 +49,11 @@ public class GraphQLDataFetchers {
 			return BookMapper.toResponseModel(bookByNameUseCase.findByName(bookName));
 		};
 	}
+
+	public DataFetcher<Integer> getBookPageCountDataFetcher() {
+		return dataFetchingEnvironment -> {
+			BookResponseModel book = dataFetchingEnvironment.getSource();
+			return book.getPageCount();
+		};
+	}
 }

@@ -51,12 +51,12 @@ public class GraphQLProvider {
 
 	private RuntimeWiring buildWiring() {
 		return RuntimeWiring.newRuntimeWiring()
-				.type(TypeRuntimeWiring.newTypeWiring("Query").dataFetcher("bookById",
-						graphQLDataFetchers.getBookByIdDataFetcher()))
-				.type(TypeRuntimeWiring.newTypeWiring("Query").dataFetcher("bookByName",
-						graphQLDataFetchers.getBookByNameDataFetcher()))
-				.type(TypeRuntimeWiring.newTypeWiring("Book").dataFetcher("author",
-						graphQLDataFetchers.getAuthorDataFetcher()))
+				.type(TypeRuntimeWiring.newTypeWiring("Query")
+						.dataFetcher("bookById", graphQLDataFetchers.getBookByIdDataFetcher())
+						.dataFetcher("bookByName", graphQLDataFetchers.getBookByNameDataFetcher()))
+				.type(TypeRuntimeWiring.newTypeWiring("Book")
+						.dataFetcher("author", graphQLDataFetchers.getAuthorDataFetcher())
+						.dataFetcher("pageCount", graphQLDataFetchers.getBookPageCountDataFetcher()))
 				.build();
 	}
 }
