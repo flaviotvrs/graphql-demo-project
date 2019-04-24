@@ -1,5 +1,8 @@
 package br.com.flaviotvrs.tutorial.entrypoint.mapper;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import br.com.flaviotvrs.tutorial.entrypoint.model.BookResponseModel;
 import br.com.flaviotvrs.tutorial.usecase.entity.Book;
 
@@ -12,6 +15,10 @@ public class BookMapper {
 					entity.getAuthorId());
 		}
 		return model;
+	}
+
+	public static List<BookResponseModel> toResponseModel(List<Book> list) {
+		return list.stream().map(entity -> toResponseModel(entity)).collect(Collectors.toList());
 	}
 
 }
