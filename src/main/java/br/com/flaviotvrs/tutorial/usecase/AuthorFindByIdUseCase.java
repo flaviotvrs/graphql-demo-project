@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.collect.ImmutableMap;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class AuthorFindByIdUseCase {
 
@@ -18,6 +21,7 @@ public class AuthorFindByIdUseCase {
 			ImmutableMap.of("id", "author-4", "firstName", "Stephen", "lastName", "King"));
 
 	public Map<String, String> findById(String authorId) {
+		log.debug("Finding author by ID '{}'", authorId);
 		return authors.stream().filter(author -> author.get("id").equals(authorId)).findFirst().orElse(null);
 	}
 
