@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import br.com.flaviotvrs.tutorial.entrypoint.mapper.BookMapper;
 import br.com.flaviotvrs.tutorial.entrypoint.model.BookResponseModel;
 import br.com.flaviotvrs.tutorial.usecase.AuthorFindByIdUseCase;
+import br.com.flaviotvrs.tutorial.usecase.BookFindByAuthorUseCase;
 import br.com.flaviotvrs.tutorial.usecase.BookFindByIdUseCase;
 import br.com.flaviotvrs.tutorial.usecase.BookFindByNameUseCase;
 import graphql.schema.DataFetcher;
@@ -18,13 +19,16 @@ public class GraphQLDataFetchers {
 
 	private BookFindByIdUseCase bookByIdUseCase;
 	private BookFindByNameUseCase bookByNameUseCase;
+	private BookFindByAuthorUseCase bookByAuthorUseCase;
 	private AuthorFindByIdUseCase authorUseCase;
 
 	@Autowired
 	public GraphQLDataFetchers(BookFindByIdUseCase bookByIdUseCase, BookFindByNameUseCase bookByNameUseCase,
-			AuthorFindByIdUseCase authorUseCase) {
+			BookFindByAuthorUseCase bookByAuthorUseCase, AuthorFindByIdUseCase authorUseCase) {
+		super();
 		this.bookByIdUseCase = bookByIdUseCase;
 		this.bookByNameUseCase = bookByNameUseCase;
+		this.bookByAuthorUseCase = bookByAuthorUseCase;
 		this.authorUseCase = authorUseCase;
 	}
 
@@ -38,7 +42,7 @@ public class GraphQLDataFetchers {
 	public DataFetcher<Map<String, String>> getAuthorDataFetcher() {
 		return dataFetchingEnvironment -> {
 			BookResponseModel book = dataFetchingEnvironment.getSource();
-			String authorId = book.getAuthorId();
+			Integer authorId = book.getAuthorId();
 			return authorUseCase.findById(authorId);
 		};
 	}
@@ -54,6 +58,13 @@ public class GraphQLDataFetchers {
 		return dataFetchingEnvironment -> {
 			BookResponseModel book = dataFetchingEnvironment.getSource();
 			return book.getPageCount();
+		};
+	}
+
+	public DataFetcher<List<BookResponseModel>> getBookByAuthorDataFetcher() {
+		return dataFetchingEnvironment -> {
+			Integer authorId = dataFetchingEnvironment.getArgument("author_id");
+			return BookMapper.toResponseModel(bookByAuthorUseCase.findByAuthor(authorId));
 		};
 	}
 }

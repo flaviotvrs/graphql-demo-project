@@ -14,6 +14,6 @@ public class Book {
 	private String id;
 	private String name;
 	private Integer pageCount;
-	private String authorId;
+	private Integer authorId;
 
 }

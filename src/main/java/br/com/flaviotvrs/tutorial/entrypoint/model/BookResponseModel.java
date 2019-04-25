@@ -5,12 +5,12 @@ public class BookResponseModel {
 	private String id;
 	private String name;
 	private Integer pageCount;
-	private String authorId;
+	private Integer authorId;
 
 	public BookResponseModel() {
 	}
 
-	public BookResponseModel(String id, String name, Integer pageCount, String authorId) {
+	public BookResponseModel(String id, String name, Integer pageCount, Integer authorId) {
 		this();
 		this.id = id;
 		this.name = name;
@@ -30,7 +30,7 @@ public class BookResponseModel {
 		return pageCount;
 	}
 
-	public String getAuthorId() {
+	public Integer getAuthorId() {
 		return authorId;
 	}
 
@@ -46,7 +46,7 @@ public class BookResponseModel {
 		this.pageCount = pageCount;
 	}
 
-	public void setAuthorId(String authorId) {
+	public void setAuthorId(Integer authorId) {
 		this.authorId = authorId;
 	}
 
