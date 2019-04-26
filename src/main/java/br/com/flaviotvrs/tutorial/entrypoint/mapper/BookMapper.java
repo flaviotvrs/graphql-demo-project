@@ -11,8 +11,8 @@ public class BookMapper {
 	public static BookResponseModel toResponseModel(Book entity) {
 		BookResponseModel model = null;
 		if (entity != null) {
-			model = new BookResponseModel(entity.getId(), entity.getName(), entity.getPageCount(),
-					entity.getAuthorId());
+			model = new BookResponseModel(entity.getId(), entity.getName(), entity.getPageCount(), entity.getAuthorId(),
+					entity.getPublished().toString(), entity.getIsbn10(), entity.getIsbn13());
 		}
 		return model;
 	}

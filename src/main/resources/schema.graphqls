@@ -9,6 +9,9 @@ type Book {
   name: String
   pageCount: Int
   author: Author
+  published: String
+  isbn10: String
+  isbn13: String
 }
 
 type Author {

@@ -14,7 +14,9 @@ public class BookMapper {
 		if (entity.isPresent()) {
 			BookEntity bookEntity = entity.get();
 			businessEntity = Book.builder().id(bookEntity.getId()).name(bookEntity.getName())
-					.pageCount(bookEntity.getPageCount()).authorId(bookEntity.getAuthorId()).build();
+					.pageCount(bookEntity.getPageCount()).authorId(bookEntity.getAuthorId())
+					.published(bookEntity.getPublished()).isbn10(bookEntity.getIsbn10()).isbn13(bookEntity.getIsbn13())
+					.build();
 		}
 		return businessEntity;
 	}
