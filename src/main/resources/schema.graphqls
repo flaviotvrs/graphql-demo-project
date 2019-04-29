@@ -2,6 +2,7 @@ type Query {
   bookById(id: ID): Book 
   bookByName(name: String): [Book]
   bookByAuthor(author_id: Int): [Book]
+  allBooks(page: Int, size: Int): [Book]
 }
 
 type Book {

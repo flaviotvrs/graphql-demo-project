@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import br.com.flaviotvrs.tutorial.entrypoint.mapper.BookMapper;
 import br.com.flaviotvrs.tutorial.entrypoint.model.BookResponseModel;
 import br.com.flaviotvrs.tutorial.usecase.AuthorFindByIdUseCase;
+import br.com.flaviotvrs.tutorial.usecase.BookFindAllUseCase;
 import br.com.flaviotvrs.tutorial.usecase.BookFindByAuthorUseCase;
 import br.com.flaviotvrs.tutorial.usecase.BookFindByIdUseCase;
 import br.com.flaviotvrs.tutorial.usecase.BookFindByNameUseCase;
@@ -20,15 +21,17 @@ public class GraphQLDataFetchers {
 	private BookFindByIdUseCase bookByIdUseCase;
 	private BookFindByNameUseCase bookByNameUseCase;
 	private BookFindByAuthorUseCase bookByAuthorUseCase;
+	private BookFindAllUseCase bookFindAllUseCase;
 	private AuthorFindByIdUseCase authorUseCase;
 
 	@Autowired
 	public GraphQLDataFetchers(BookFindByIdUseCase bookByIdUseCase, BookFindByNameUseCase bookByNameUseCase,
-			BookFindByAuthorUseCase bookByAuthorUseCase, AuthorFindByIdUseCase authorUseCase) {
-		super();
+			BookFindByAuthorUseCase bookByAuthorUseCase, BookFindAllUseCase bookFindAllUseCase,
+			AuthorFindByIdUseCase authorUseCase) {
 		this.bookByIdUseCase = bookByIdUseCase;
 		this.bookByNameUseCase = bookByNameUseCase;
 		this.bookByAuthorUseCase = bookByAuthorUseCase;
+		this.bookFindAllUseCase = bookFindAllUseCase;
 		this.authorUseCase = authorUseCase;
 	}
 
@@ -65,6 +68,14 @@ public class GraphQLDataFetchers {
 		return dataFetchingEnvironment -> {
 			Integer authorId = dataFetchingEnvironment.getArgument("author_id");
 			return BookMapper.toResponseModel(bookByAuthorUseCase.findByAuthor(authorId));
+		};
+	}
+
+	public DataFetcher<List<BookResponseModel>> getAllBooksDataFetcher() {
+		return dataFetchingEnvironment -> {
+			Integer page = dataFetchingEnvironment.getArgument("page");
+			Integer size = dataFetchingEnvironment.getArgument("size");
+			return BookMapper.toResponseModel(bookFindAllUseCase.findAll(page, size));
 		};
 	}
 }
